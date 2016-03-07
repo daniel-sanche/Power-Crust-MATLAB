@@ -9,8 +9,9 @@ function [ polesMat, polarBallRad ] = FindPoles( verts, cells, points )
         
         %find the furthest voroni vertex
         thisPointMat =  repmat(thisPoint, length(cellsVertices), 1);
-        distFromPoint = abs(cellsVertices - thisPointMat);
+        distFromPoint = (cellsVertices - thisPointMat) .^ 2;
         distFromPoint = sum(distFromPoint, 2);
+        distFromPoint = sqrt(distFromPoint);
         [~, idx] = max(distFromPoint);
         firstPole = cellsVertices(idx,:);
         firstPoleIdx = thisCell(idx);
