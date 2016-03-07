@@ -1,5 +1,6 @@
-function [ polesMat] = FindPoles( verts, cells, points )
+function [ polesMat, poleRadMat] = FindPoles( verts, cells, points )
     polesMat = zeros(length(cells)*2, 1);
+    poleRadMat = zeros(length(cells)*2, 1);
     j = 1;
     for i =1:length(cells)
         thisPoint = points(i,:);
@@ -15,17 +16,21 @@ function [ polesMat] = FindPoles( verts, cells, points )
         firstPole = cellsVertices(idx,:);
         firstPoleIdx = thisCell(idx);
         firstPoleMat = repmat(firstPole, length(cellsVertices), 1);
+        firstRad = distFromPoint(idx);
         
         %find the second pole
         vectorToFurthestMat = firstPoleMat - thisPointMat;
         vectorToEach = cellsVertices - thisPointMat;
         negativeDot = dot(vectorToFurthestMat, vectorToEach, 2) < 0;
         onlyNegatives = distFromPoint(negativeDot, :);
+        [secondRad, idx] = max(onlyNegatives);
         filteredVertices = thisCell(negativeDot);
-        [~, idx] = max(onlyNegatives);
         secondPoleIdx = filteredVertices(idx);
+        
         polesMat(j) = firstPoleIdx;
+        poleRadMat(j) = firstRad;
         polesMat(j+1) = secondPoleIdx;
+        poleRadMat(j+1) = secondRad;
         j=j+2;
         
         %hold on;
