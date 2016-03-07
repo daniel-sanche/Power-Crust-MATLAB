@@ -10,4 +10,4 @@ y = points(:,2);
 z = points(:,3);
  
 
-[vx, vy] = GenerateVoroni(x, y, z);
+[verts, cells] = GenerateVoroni(x, y, z);

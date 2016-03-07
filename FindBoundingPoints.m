@@ -13,20 +13,20 @@ meanX = mean(points(:,1));
 meanY = mean(points(:,2));
 meanZ = mean(points(:,3));
 
-diffMaxX = maxX - meanX
-diffMaxY = maxY - meanY
-diffMaxZ = maxZ - meanZ
-diffMinX = minX - meanX
-diffMinY = minY - meanY
-diffMinZ = minZ - meanZ
+diffMaxX = maxX - meanX;
+diffMaxY = maxY - meanY;
+diffMaxZ = maxZ - meanZ;
+diffMinX = minX - meanX;
+diffMinY = minY - meanY;
+diffMinZ = minZ - meanZ;
 
 %The paper suggests putting them at 5 times the minimal bounding box
-maxX = maxX + diffMaxX*4
-maxY = maxY + diffMaxY*4
-maxZ = maxZ + diffMaxZ*4
-minX = minX + diffMinX*4
-minY = minY + diffMinY*4
-minZ = minZ + diffMinZ*4
+maxX = maxX + diffMaxX*4;
+maxY = maxY + diffMaxY*4;
+maxZ = maxZ + diffMaxZ*4;
+minX = minX + diffMinX*4;
+minY = minY + diffMinY*4;
+minZ = minZ + diffMinZ*4;
 
 
 bounds = [maxX,maxY,maxZ; maxX,maxY,minZ; maxX,minY,maxZ; maxX,minY,minZ;
