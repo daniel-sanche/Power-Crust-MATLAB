@@ -11,3 +11,8 @@ z = points(:,3);
  
 
 [verts, cells] = GenerateVoroni(x, y, z);
+%remove the last 8 cells, because they correspond to the bounding points
+cells = cells(1:length(cells)-8,:);
+
+%find the poles of each cell
+[ outerPoleMat, innerPoleMat ] = FindPoles( verts, cells, points );
