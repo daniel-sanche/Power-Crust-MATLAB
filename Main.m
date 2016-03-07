@@ -1,7 +1,12 @@
 ptCloud = pcread('teapot.ply');
+%pcshow(ptCloud)
 
-x = gallery('uniformdata',[1 10],0);
-y = gallery('uniformdata',[1 10],1);
+
+points = unique(ptCloud.Location, 'rows');
+
+x = points(:,1);
+y = points(:,2);
+z = points(:,3);
  
 
-[vx, vy] = GenerateVoroni(x, y);
+[vx, vy] = GenerateVoroni(x, y, z);
