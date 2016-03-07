@@ -1,6 +1,5 @@
-function [ polesMat, polarBallRad ] = FindPoles( verts, cells, points )
+function [ polesMat] = FindPoles( verts, cells, points )
     polesMat = zeros(length(cells)*2, 1);
-    radMat = zeros(length(cells), 1);
     j = 1;
     for i =1:length(cells)
         thisPoint = points(i,:);
@@ -29,9 +28,6 @@ function [ polesMat, polarBallRad ] = FindPoles( verts, cells, points )
         polesMat(j+1) = secondPoleIdx;
         j=j+2;
         
-        %find the radius of the polar ball
-        radius = min(distFromPoint);
-        radMat(i) = radius;
         %hold on;
         %plot cell hull
         %hull = convhulln(cellsVertices); 
