@@ -1,6 +1,6 @@
-function [ outerPoleMat, innerPoleMat ] = FindPoles( verts, cells, points )
-    outerPoleMat = zeros(length(cells), 3);
-    innerPoleMat = zeros(length(cells), 3);
+function [ polesMat ] = FindPoles( verts, cells, points )
+    polesMat = zeros(length(cells)*2, 1);
+    j = 1;
     for i =1:length(cells)
         thisPoint = points(i,:);
         thisCell = cells{i};
@@ -12,6 +12,7 @@ function [ outerPoleMat, innerPoleMat ] = FindPoles( verts, cells, points )
         distFromPoint = sum(distFromPoint, 2);
         [~, idx] = max(distFromPoint);
         firstPole = cellsVertices(idx,:);
+        firstPoleIdx = thisCell(idx);
         firstPoleMat = repmat(firstPole, length(cellsVertices), 1);
         
         %find the second pole
@@ -19,11 +20,12 @@ function [ outerPoleMat, innerPoleMat ] = FindPoles( verts, cells, points )
         vectorToEach = cellsVertices - thisPointMat;
         negativeDot = dot(vectorToFurthestMat, vectorToEach, 2) < 0;
         onlyNegatives = distFromPoint(negativeDot, :);
-        filteredVertices = cellsVertices(negativeDot, :);
+        filteredVertices = thisCell(negativeDot);
         [~, idx] = max(onlyNegatives);
-        secondPole = filteredVertices(idx,:);
-        outerPoleMat(i, :) = firstPole;
-        innerPoleMat(i, :) = secondPole;
+        secondPoleIdx = filteredVertices(idx);
+        polesMat(j, :) = firstPoleIdx;
+        polesMat(j+1, :) = secondPoleIdx;
+        j=j+2;
         %hold on;
         %plot cell hull
         %hull = convhulln(cellsVertices); 

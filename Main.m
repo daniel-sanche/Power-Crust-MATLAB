@@ -15,4 +15,4 @@ z = points(:,3);
 cells = cells(1:length(cells)-8,:);
 
 %find the poles of each cell
-[ outerPoleMat, innerPoleMat ] = FindPoles( verts, cells, points );
+[ poles ] = FindPoles( verts, cells, points );
