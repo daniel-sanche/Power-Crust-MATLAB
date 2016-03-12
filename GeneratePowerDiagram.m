@@ -1,4 +1,4 @@
-function [  ] = GeneratePowerDiagram( inputVerts, weights )
+function [outputVerts, outputCells] = GeneratePowerDiagram( inputVerts, weights )
     %a power diagram in n dimensions is equavalent to a voronoi diagram
     %in n+1 directions, using sqrt(C-weight) for the n+1st dimension
     %where c is a large constant
