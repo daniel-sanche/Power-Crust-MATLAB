@@ -17,5 +17,7 @@ cells = cells(1:length(cells)-8,:);
 %find the poles of each cell
 [poleIdxMat, poleRadMat] = FindPoles( verts, cells, points );
 poleVerts = verts(poleIdxMat, :);
+[poleVerts, keptIdx] = unique(poleVerts, 'rows');
+poleRadMat = poleRadMat(keptIdx);
 
-%[PD, PDinf] = powerDiagramWrapper(poleVerts, poleRadMat);
+GeneratePowerDiagram(poleVerts, poleRadMat);
