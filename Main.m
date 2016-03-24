@@ -17,8 +17,5 @@ poleVerts = verts(poleIdxMat, :);
 [poleVerts, keptIdx] = unique(poleVerts, 'rows');
 poleRadMat = poleRadMat(keptIdx);
 
-%GeneratePowerDiagram(poleVerts, poleRadMat);
-[powerVerts, powerCells] = voronoin(poleVerts); 
-DisplayVoronoi(powerVerts, powerCells, poleVerts);
-
-%label each pole as inside or outside
+%find the power diagram
+[PD, PDinf] = powerDiagramWrapper(poleVerts, poleRadMat);
