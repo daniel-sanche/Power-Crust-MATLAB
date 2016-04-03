@@ -16,4 +16,3 @@ for y=-Radius:Spacing:Radius
     points(i+1,:) = [-x y];
     i=i+2;
 end
-%plot(points(:,1), points(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none')

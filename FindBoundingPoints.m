@@ -1,4 +1,4 @@
-function [ boundsPoints ] = FindBoundingPoints( points )
+function [ boundsPoints ] = FindBoundingPoints( points, multiplier )
 %To avoid infinitely large voroni cells, we find the 8 bounding points of
 %the point cloud.
 
@@ -12,8 +12,8 @@ for i=1:cols
    meanPt = mean(points(:,i));
    diffMax = maxPt - meanPt;
    diffMin = minPt - meanPt;
-   maxPt = maxPt + diffMax*4;
-   minPt = minPt + diffMin*4;
+   maxPt = maxPt + diffMax*multiplier;
+   minPt = minPt + diffMin*multiplier;
    
    numRepeats = 2^(i-1);
    j = 1;
