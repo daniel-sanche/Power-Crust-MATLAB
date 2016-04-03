@@ -15,22 +15,27 @@ function [PC, powers] = powercentersPD(T, E, wts)
 PC = zeros(m,n-1);
 powers = zeros(m,1);
 
+%figure;
+%hold on;
 for i=1:m
-    tr = E(T(i,:),:);
-    wt = wts(T(i,:));
-    p = tr(1,:);
-    Rp = repmat(p, n-1, 1);
-    Pts = tr(2:n,:);
-    Ac = 2*(Pts - Rp);
+    triangle = E(T(i,:),:);
+    weight = wts(T(i,:));
+    firstPoint = triangle(1,:);
+    firstPointMat = repmat(firstPoint, n-1, 1);
+    otherTwo = triangle(2:n,:);
+    diffFromFirst = 2*(otherTwo - firstPointMat);
     
-    Rw1 = repmat(wt(1), n-1, 1);
-    Wts = wt(2:n);
-    Sp1 = repmat(sum(p.^2), n-1, 1);
-    SPts = sum(Pts.^2, 2);
-    Bc = Rw1 - Wts - Sp1 + SPts;
+    pointWeightMat = repmat(weight(1), n-1, 1);
+    otherWeights = weight(2:n);
+    firstSquared = repmat(sum(firstPoint.^2), n-1, 1);
+    otherSquared = sum(otherTwo.^2, 2);
+    Bc = pointWeightMat - otherWeights - firstSquared + otherSquared;
     
-    pc = Ac \ Bc;
+    pc = diffFromFirst \ Bc;
     
     PC(i,:) = pc;
-    powers(i,1) = norm(pc - p')^2 - wt(1);
+    powers(i,1) = norm(pc - firstPoint')^2 - weight(1);
+    
+   % plot(triangle(:,1), triangle(:,2), 'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
+   % plot(pc(1), pc(2), 'Marker','.','MarkerEdgeColor','b','MarkerSize',10, 'LineStyle', 'none');
 end
