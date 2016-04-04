@@ -54,7 +54,7 @@ for i=1:length(edgeMidPts)
    distanceMat = sqrt(distanceMat);
    distanceMat = distanceMat - poleRads;
    
-   if(min(distanceMat)<-0.01)
+   if(min(distanceMat)<-0.02)
       intersectsBall(i) = 1;
    end
 end
