@@ -21,7 +21,10 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
     
     points = unique(points, 'rows');
     points = double(points);
-
+    [~,dim] = size(points);
+    if(dim~=2 && dim~=3)
+       error('point cloud must be 2D or 3D'); 
+    end
     
     %% Step 1: Voronoi Diagram
     disp('Finding Voronoi Diagram');
@@ -51,7 +54,7 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
 
     %% Step 5: Generate Outputs
     disp('Generating Mesh/Medial Axis');
-    [MeshVerts, MeshEdges] = FindSurfaceMesh(labels, PD{2}, PD{1}, poleVerts, poleRadMat);
+    [MeshVerts, MeshEdges] = FindSurfaceMesh(labels, PD{dim}, PD{1}, poleVerts, poleRadMat, points);
     [MedialAxis, MAT] = FindMedialAxis(poleVerts, labels, PD{1});
 
     DisplayMesh(MeshEdges);
