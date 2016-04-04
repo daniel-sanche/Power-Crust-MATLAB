@@ -47,10 +47,10 @@ function [officialLabels] = LabelPoles( polePoints, inputPoints, weights, poleSa
     oppIdx = poleOppositeIdx(nextIdx);
      
     %assign the label based on which value is most likely
-    if(inVal > outVal)
-      officialLabels(overallIdx) = 1; 
+    if(outVal >= inVal)
+      officialLabels(overallIdx) = 0; 
     else 
-      officialLabels(overallIdx) = 0;
+      officialLabels(overallIdx) = 1;
     end
      
     %remove the value from all lists
