@@ -32,7 +32,7 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
     %create a voronoi diagram from the points
     [verts, cells] = voronoin(points);
 
-    %remove the last 4 cells, because they correspond to the bounding points
+    %remove the last cells, because they correspond to the bounding points
     numBounds = length(boundPts);
     cells = cells(1:length(cells)-numBounds,:);
     points = points(1:length(points)-numBounds,:);
@@ -44,10 +44,6 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
     %% Step 3: Compute Power Diagram of Poles
     disp('Finding Power Diagram');
     [PD, ~] = powerDiagramWrapper(poleVerts, poleRadMat .^2);
-    hold on;
-    title('Power Diagram');
-    plot(points(:,1), points(:,2),'Marker','.','MarkerEdgeColor','g','MarkerSize',10, 'LineStyle', 'none');
-    hold off;
 
     %% Step 4: Label Poles
     disp('Labeling Poles');
