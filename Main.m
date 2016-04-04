@@ -37,6 +37,6 @@ hold off;
 labels = LabelPoles(poleVerts, points, poleRadMat, sampleIdxForPole, oppositePoleIdx);
 
 %generage the mesh
-[meshVerts, meshEdges] = FindSurfaceMesh(labels, PD{2}, PD{1});
+[meshVerts, meshEdges] = FindSurfaceMesh(labels, PD{2}, PD{1}, poleVerts, poleRadMat);
 
 DisplayMesh(meshEdges);

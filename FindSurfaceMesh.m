@@ -1,4 +1,4 @@
-function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCells )
+function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCells, polePts, poleRads)
 
 %find the lists of all vertices touching the inside, and all vertices
 %touching the outside
@@ -24,6 +24,7 @@ meshVerts = unique(meshVerts, 'rows');
 
 %find the set of edges between border vertices
 meshEdges = cell(length(meshVerts),1);
+edgeMidPts = zeros(length(meshVerts),2);
 idx = 1;
 for i=1:length(edgeList)
     points = edgeList{i};
@@ -34,8 +35,28 @@ for i=1:length(edgeList)
     onBorder1 = sum(meshVerts(:, 1) == pt1(1) & meshVerts(:, 2) == pt1(2));
     onBorder2 = sum(meshVerts(:, 1) == pt2(1) & meshVerts(:, 2) == pt2(2));
     if(onBorder1 == 1 && onBorder2 == 1)
+       midpt = (pt1 + pt2)./2;        
        meshEdges(idx, 1) = {points};
+       edgeMidPts(idx, :) = midpt;
        idx = idx+1;
     end
 end
+
+%filter out the edges that intersect a lot with a polar ball
+intersectsBall = zeros(length(edgeMidPts),1);
+
+for i=1:length(edgeMidPts)
+   midPt = edgeMidPts(i,:);
+   midPtMat = repmat(midPt, length(polePts), 1);
+   distanceMat = midPtMat - polePts;
+   distanceMat = distanceMat .^ 2;
+   distanceMat = sum(distanceMat,2);
+   distanceMat = sqrt(distanceMat);
+   distanceMat = distanceMat - poleRads;
+   
+   if(min(distanceMat)<-0.01)
+      intersectsBall(i) = 1;
+   end
+end
+meshEdges = meshEdges(~intersectsBall);
 end
