@@ -48,11 +48,10 @@ function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCel
     %find the vertices involved in the edge
     pt1 = points(1,:);
     pt2 = points(2,:);
-    CHECK THIS STEP. Are we really looking for the points themselves? or just their components?
-    onBorder1 = sum(meshVerts(:, 1) == pt1(1) & meshVerts(:, 2) == pt1(2));
-    onBorder2 = sum(meshVerts(:, 1) == pt2(1) & meshVerts(:, 2) == pt2(2));
+    onBorder1 = ismember(pt1, meshVerts, 'rows');
+    onBorder2 = ismember(pt2,meshVerts,'rows');
     %if both vertices are on the border of the inside and the outside, keep the edge
-    if(onBorder1 == 1 && onBorder2 == 1)
+    if(onBorder1 && onBorder2)
       midpt = (pt1 + pt2)./2;        
       meshEdges(idx, 1) = {points};
       edgeMidPts(idx, :) = midpt;
