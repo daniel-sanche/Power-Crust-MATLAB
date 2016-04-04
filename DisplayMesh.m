@@ -1,8 +1,9 @@
 function DisplayMesh( meshEdges )
-%Takes in a mesh, and displays it in a figure window
-%inputs
-%meshEdges - a cell array, where each cell holds two points that represent
-%an edge on the surface mesh
+% Takes in a mesh, and displays it in a figure window
+%
+% inputs:
+% meshEdges - a cell array, where each cell holds two points that represent
+% an edge on the surface mesh
 
 
 [numEdges, ~] = size(meshEdges);

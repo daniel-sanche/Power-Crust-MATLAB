@@ -1,5 +1,6 @@
 function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCells, polePts, poleRads)
   % generates the surface mesh for the model
+  %
   % inputs:
   % labels - a vector representing the label of each pole (1=inside,0=outside)
   % edgeList - a list of power cells from the power diagram of the poles
@@ -9,6 +10,7 @@ function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCel
   %            columns represent the coordinate values
   % poleRads - a list of the radius for each pole. Represents the distance from the pole
   %            to its nearest point in the point cloud
+  %
   % outputs:
   % meshVerts - a list of all the vertices on the output surface mesh
   % meshEdges - a list of edges between the meshVerts, creating a solid polygonal mesh

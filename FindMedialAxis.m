@@ -1,11 +1,13 @@
 function [ MedialAxis, MAT ] = FindMedialAxis( poles, labels, powerDiagram )
 % This process finds the medial axis and medial axis transform of the points
-% input:
+%
+% inputs:
 % poles - the set of poles from transform
 % labels - a vector representing the label of each pole (1=inside,0=outside)
 % powerDiagram - the power diagram from the labels. It is a set of cells,
 %                where each cell contains a list of all vertices for each pole's power region.
-% output:
+%
+% outputs:
 % MedialAxis - the set of points representing the medial axis of the point cloud
 % MAT - the medial axis transform. Represents a set of edges between MedialAxis points
 

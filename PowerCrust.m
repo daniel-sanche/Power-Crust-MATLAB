@@ -1,4 +1,22 @@
 function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
+    %This algorithm is an implementation of the Powert Crust algorithm
+    %described by Nina Amenta, Sunghee Choi, and  Ravi Krishna Kolluri
+    %from the University of Texas at Austin.
+    %The algorithm takes in a 2D point cloud as input, and returns a
+    %surface mesh, and the medial axis transform
+    %
+    % inputs:
+    % points - a hallow 2D point cloud of some object
+    %          should be nx2, where each row is a distinct point
+    %
+    % outputs:
+    % MeshVerts - a list of all the vertices on the output surface mesh
+    % MeshEdges - a list of edges between the meshVerts, creating a solid polygonal mesh
+    %             represented by a cell array, where each cell contains two vertices that can be joined with a line
+    % MedialAxis - the set of points representing the medial axis of the point cloud
+    % MAT - the medial axis transform. Represents a set of edges between MedialAxis points
+    
+    
     %% Setup
     
     points = unique(points, 'rows');

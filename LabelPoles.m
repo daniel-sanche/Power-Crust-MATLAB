@@ -1,6 +1,7 @@
 function [officialLabels] = LabelPoles( polePoints, inputPoints, weights, poleSampleIdx, poleOppositeIdx )
-% assigns a label to each pole. 
+% Assigns a label to each pole. 
 % Each pole will be labeled as either inside (1) or outside (0)
+%
 % inputs:
 % polePoints - the list of poles (extreme voroni vertices of point cloud)
 % inputPoints - the original input point cloud
@@ -9,6 +10,7 @@ function [officialLabels] = LabelPoles( polePoints, inputPoints, weights, poleSa
 %                 represented as a list of indices into the inputPoints array
 % poleOppositeIdx - the opposite pole associated with each pole in polePoints
 %                   represented as a list of indices into polePoints
+%
 % output:
 % officialLabels - a vector representing the label of each pole (1=inside,0=outside)
 
