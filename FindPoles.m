@@ -29,26 +29,37 @@ function [ poleVerts, poleRadMat, sampleIdxForPole, oppositePoleIdx] = FindPoles
         filteredVertices = thisCell(negativeDot);
         secondPoleIdx = filteredVertices(idx);
         
+        addedFirst = false;
+        
         if(isempty(find(polesMat == firstPoleIdx)))
+            %if the first pole wasn't created yet, add it to the list
             polesMat(j) = firstPoleIdx;
             poleRadMat(j) = firstRad;
             sampleIdxForPole(j) = i;
-            if(isempty(find(polesMat == secondPoleIdx)))
-                oppositePoleIdx(j) = secondPoleIdx;
-            else
-                oppositePoleIdx(j) = find(polesMat == secondPoleIdx);
-            end
+            secondOppIdx = j;
+            firstj = j;
             j=j+1;
+            addedFirst = true;
         else
-            firstPoleIdx = find(polesMat == firstPoleIdx);
+            secondOppIdx = find(polesMat == firstPoleIdx);
         end
         if(isempty(find(polesMat == secondPoleIdx)))
+            %if the second pole wasn't created yet, add it to the list
             polesMat(j) = secondPoleIdx;
             poleRadMat(j) = secondRad;
             sampleIdxForPole(j) = i;
-            oppositePoleIdx(j) = firstPoleIdx;
+            firstOppIdx = j;
+            oppositePoleIdx(j) = secondOppIdx;
             j=j+1;
+        else
+            firstOppIdx = find(polesMat == secondPoleIdx); 
         end
+        
+        %update the opposite indices for the ones added
+        if(addedFirst)
+            oppositePoleIdx(firstj) = firstOppIdx;
+        end
+
     end
     polesMat(polesMat==-1) = [];
     poleRadMat(poleRadMat==-1) = [];
