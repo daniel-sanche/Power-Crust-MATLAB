@@ -7,15 +7,25 @@ function DisplayMedialAxis( MedialAxis, MAT )
 %       cell is a set of two points, representing an edge between medial axis
 %       points
 
+[~,dim] = size(MedialAxis);
+
 figure;
 hold on;
 for i=1:length(MAT)
    edge = MAT{i};
-   plot(edge(:,1), edge(:,2), 'color','b');
+   if(dim==2)
+       plot(edge(:,1), edge(:,2), 'color','b');
+   elseif (dim==3)
+       plot3(edge(:,1), edge(:,2), edge(:,3), 'color','b');
+   end
 end
 
-plot(MedialAxis(:,1), MedialAxis(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',5, 'LineStyle', 'none');
-
+if(dim==2)
+   plot(MedialAxis(:,1), MedialAxis(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',5, 'LineStyle', 'none');
+elseif (dim==3)
+   plot3(MedialAxis(:,1), MedialAxis(:,2), MedialAxis(:,3),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
+end
+title('Medial Axis Transform');
 hold off;
 
 end
