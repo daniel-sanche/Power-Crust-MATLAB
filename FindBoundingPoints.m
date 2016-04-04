@@ -1,6 +1,13 @@
 function [ boundsPoints ] = FindBoundingPoints( points, multiplier )
-%To avoid infinitely large voroni cells, we find the 8 bounding points of
-%the point cloud.
+%To avoid infinitely large voroni cells, we find the bounding points away
+%from the regular point cloud. The number of bounding points returned will
+%depend on the number of dimensions
+%inputs: 
+%points - the point cloud we are looking for bounding points for
+%multiplier - the distance away from the point cloud to put the bounds at
+%outputs:
+%boundingPoints - a matrix of points, where each row is a point, and each
+%                 column is a dimension
 
 [rows, cols] = size(points);
 

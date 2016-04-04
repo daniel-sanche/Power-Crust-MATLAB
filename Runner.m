@@ -1,9 +1,12 @@
 ptCloud = pcread('teapot.ply');
 points = double(ptCloud.Location);
 
-points = points(:,1:2:3);
+ptCloudA = points(:,1:2:3);
+ptCloudB = points(:,2:3);
+ptCloudC = points(:,1:2);
 
-plot(points(:,1),points(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
+points = ptCloudA;
+
 k = boundary(points(:,1),points(:,2),1);
 points = points(k,:);
 

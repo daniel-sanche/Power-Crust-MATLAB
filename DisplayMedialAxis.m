@@ -1,4 +1,10 @@
 function DisplayMedialAxis( MedialAxis, MAT )
+%Takes in a medial axis and MAT, and displays it in a figure window
+%inputs
+%MedialAxis - the collection of points representing the medial axis
+%MAT - the medial axis transform. Represented by a cell array, where each
+%      cell is a set of two points, representing an edge between medial axis
+%      points
 
 figure;
 hold on;
