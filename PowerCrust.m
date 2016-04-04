@@ -54,7 +54,8 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
 
     %% Step 5: Generate Outputs
     disp('Generating Mesh/Medial Axis');
-    [MeshVerts, MeshEdges] = FindSurfaceMesh(labels, PD{dim}, PD{1}, poleVerts, poleRadMat, points);
+    boundingBox = FindBoundingPoints(points, 0);
+    [MeshVerts, MeshEdges] = FindSurfaceMesh(labels, PD{dim}, PD{1}, poleVerts, poleRadMat, boundingBox);
     [MedialAxis, MAT] = FindMedialAxis(poleVerts, labels, PD{1});
 
     DisplayMesh(MeshEdges);
