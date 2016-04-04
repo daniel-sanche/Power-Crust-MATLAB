@@ -3,7 +3,7 @@
 %load the built in MATLAB teapot point cloud
 ptCloud = pcread('teapot.ply');
 
-ptCloud = pcdownsample(ptCloud,'gridAverage',0.23);
+ptCloud = pcdownsample(ptCloud,'gridAverage',0.25);
 
 points = ptCloud.Location;
 
