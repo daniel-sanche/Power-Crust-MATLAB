@@ -142,14 +142,14 @@ end
 %returns a matrix representing whether they are in the box
 function [inBox] = isInBoundingBox(pts, box)
   [rows, cols] = size(box);
-  inBox = ones(length(pts), 1);
+  inBox = logical(ones(length(pts), 1));
   for i=1:cols
     ptDim = pts(:,i);
     maxVal = max(box(:,i));
     minVal = min(box(:,i));
     lessThanMax = ptDim < maxVal;
     moreThanMin = ptDim > minVal;
-    matchesBoth = lessThanMax .* moreThanMin;
-    inBox = inBox .* matchesBoth;
+    matchesBoth = and(lessThanMax, moreThanMin);
+    inBox = and(inBox, matchesBoth);
   end
 end
