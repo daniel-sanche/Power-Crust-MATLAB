@@ -2,8 +2,6 @@ function [ MedialAxis, MAT ] = FindMedialAxis( poles, labels, powerDiagram )
 
 MedialAxis = poles(labels, :);
 
-plot(MedialAxis(:,1),MedialAxis(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
-
 %find the neighbouring voronoi cells
 MAT = cell(length(MedialAxis),1);
 idx = 1;
