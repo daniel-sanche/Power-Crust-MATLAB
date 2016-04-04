@@ -12,7 +12,12 @@ figure;
 hold on;
 for i=1:numEdges
    pts = meshEdges{i}; 
-   plot(pts(:,1),pts(:,2));
+   [~,dim] = size(pts);
+   if(dim==2)
+    plot(pts(:,1),pts(:,2));
+   elseif (dim==3)
+    plot3(pts(:,1),pts(:,2),pts(:,3));
+   end
 end
 title('Surface Mesh');
 hold off;
