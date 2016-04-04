@@ -25,7 +25,9 @@ plot(points(:,1), points(:,2),'Marker','.','MarkerEdgeColor','g','MarkerSize',10
 hold off;
 
 %label points (inside/outside)
-labels = LabelPoles(poleVerts, points, poleRadMat);
+labels = LabelPoles(poleVerts, points, poleRadMat, sampleIdxForPole, oppositePoleIdx);
 
 %generage the mesh
 [meshVerts, meshEdges] = FindSurfaceMesh(labels, PD{2}, PD{1});
+
+DisplayMesh(meshEdges);

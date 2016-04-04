@@ -1,9 +1,5 @@
-function [result] = LabelPoles( polePoints, inputPoints, weights )
+function [officialLabels] = LabelPoles( polePoints, inputPoints, weights, poleSampleIdx, poleOppositeIdx )
 boundingBox = FindBoundingPoints(inputPoints, 0);
-plot(polePoints(:,1), polePoints(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
-hold on
-plot(boundingBox(:,1), boundingBox(:,2),'Marker','.','MarkerEdgeColor','b','MarkerSize',10, 'LineStyle', 'none');
-plot(inputPoints(:,1), inputPoints(:,2),'Marker','.','MarkerEdgeColor','g','MarkerSize',10, 'LineStyle', 'none');
 
 out = zeros(length(polePoints),1);
 in = zeros(length(polePoints),1);
@@ -25,6 +21,8 @@ while(~isempty(remainingIndices))
    outVal = out(nextIdx);
    
    overallIdx = remainingIndices(nextIdx);
+   sampleIdx = poleSampleIdx(nextIdx);
+   oppIdx = poleOppositeIdx(nextIdx);
    
    if(inVal > outVal)
       officialLabels(overallIdx) = 1; 
@@ -35,11 +33,13 @@ while(~isempty(remainingIndices))
    in(nextIdx) = [];
    out(nextIdx) = [];
    remainingIndices(nextIdx) = [];
+   poleSampleIdx(nextIdx) = [];
+   poleOppositeIdx(nextIdx) = [];
    
-   %find which points overlap. They should likely be given the same label
    [numRemaining,~] = size(remainingIndices);
    
    if(~isempty(remainingIndices))
+       %find which points overlap. They should likely be given the same label
        remainingPts = polePoints(remainingIndices, :);
        remainingPtRad = weights(remainingIndices);
        thisPtRad = weights(overallIdx);
@@ -60,6 +60,28 @@ while(~isempty(remainingIndices))
        else
           out = max(out, overlapRating);
        end
+       %look at the opposite pole, and see how far apart they are
+       %the angle between them will inform whether to mark the opposite
+       %pole as being on the opposite side
+       if(~isempty(find(remainingIndices==oppIdx)))
+            convertedIdx = find(remainingIndices==oppIdx);
+            oppPt = polePoints(oppIdx,:);
+            samplePt = inputPoints(sampleIdx,:);
+       
+            v1 = oppPt - samplePt;
+            v1 = v1/norm(v1);
+            v2 = thisPt - samplePt;
+            v2 = v2/norm(v2);
+            angle = -cos(acos( dot(v1, v2) ));
+            if(officialLabels(overallIdx) == 1)
+                out(convertedIdx) = max(angle, out(convertedIdx)); 
+            else
+                in(convertedIdx) = max(angle, out(convertedIdx));
+            end
+       end
+       
+       
+       %regenerate priority queue
        priorityQueue = generatePriorityQueue(in, out);
    end
 end
