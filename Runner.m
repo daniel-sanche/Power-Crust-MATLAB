@@ -23,4 +23,3 @@ title('original input');
 
 %run Power Crust
 PowerCrust(points);
-disp('Done');

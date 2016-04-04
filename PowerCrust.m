@@ -24,7 +24,7 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
 
     
     %% Step 1: Voronoi Diagram
-    
+    disp('Finding Voronoi Diagram');
     %add boundary points to avoid infinite voronoi cells
     boundPts = FindBoundingPoints(points, 10);
     points = [points ; boundPts];
@@ -38,10 +38,11 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
     points = points(1:length(points)-numBounds,:);
 
     %% Step 2: Find Poles
-
+    disp('Finding Poles');
     [poleVerts, poleRadMat, sampleIdxForPole, oppositePoleIdx] = FindPoles( verts, cells, points );
 
     %% Step 3: Compute Power Diagram of Poles
+    disp('Finding Power Diagram');
     [PD, ~] = powerDiagramWrapper(poleVerts, poleRadMat .^2);
     hold on;
     title('Power Diagram');
@@ -49,9 +50,11 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
     hold off;
 
     %% Step 4: Label Poles
+    disp('Labeling Poles');
     labels = LabelPoles(poleVerts, points, poleRadMat, sampleIdxForPole, oppositePoleIdx);
 
     %% Step 5: Generate Outputs
+    disp('Generating Mesh/Medial Axis');
     [MeshVerts, MeshEdges] = FindSurfaceMesh(labels, PD{2}, PD{1}, poleVerts, poleRadMat);
     [MedialAxis, MAT] = FindMedialAxis(poleVerts, labels, PD{1});
 

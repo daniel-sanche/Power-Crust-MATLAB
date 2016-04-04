@@ -10,22 +10,15 @@ function [PD, PDinf] = powerDiagramWrapper(E, wts)
 %
 % If the initial points are in R^2, the power diagram is drawn.
 
-disp('Lifting points');
 LE = liftPD(E, wts);
-disp('Computing convex hull');
 C = convhulln(LE);
-disp('Extracting lower hull');
 ind = normalsPD(LE, C);
 T = C(ind, :);
 
 nT = size(T,2);
-disp('Finding pieces');
 [P, total] = piecesPD(T);
-disp('Finding power centers');
 [PC, powers] = powercentersPD(T, E, wts);
-disp('Finding free boundary');
 FF = freeBouPD(T, P{nT-1});
-disp('Finding power diagram');
 PD = pwrDiagramPD(T, PC);
 
 center = mean(E,1);
@@ -34,7 +27,6 @@ PDinf = zeros(size(FF));
 % find distance from center to farthest powercenter
 length = max(sqrt(sum(bsxfun(@minus, PC, center).^2,2)));
 
-disp('Finding points on infinite edges of the power diagram');
 for i=1:size(FF,1)
     facet = E(FF(i,:),:);
     ea = edgeAttPD(T, FF(i,:));
