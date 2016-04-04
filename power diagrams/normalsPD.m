@@ -14,7 +14,6 @@ for i=1:m
     [mm, nn] = size(v);
     if mm > 1
         V(i,:) = NaN;
-        error('nullspace error')
         % possibility of degenerate null vectors
     else
         V(i,:) = v;
