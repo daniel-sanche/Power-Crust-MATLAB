@@ -1,5 +1,6 @@
-function [result] = LabelPoles( polePoints, inputPoints )
+function [result] = LabelPoles( polePoints, inputPoints, weights )
 
+rads = sqrt(weights);
 
 boundingBox = FindBoundingPoints(inputPoints, 0);
 plot(polePoints(:,1), polePoints(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
@@ -39,9 +40,64 @@ while(~isempty(priorityQueue))
    remainingIndices(nextIdx) = [];
    
    priorityQueue = generatePriorityQueue(in, out);
+   
+   %find which points overlap. They should likely be given the same label
+   [numRemaining,~] = size(remainingIndices);
+   remainingPts = polePoints(remainingIndices, :);
+   remainingPtRad = rads(remainingIndices);
+   thisPtRad = rads(overallIdx);
+   thisPt = polePoints(overallIdx,:);
+   thisPtMat = repmat(thisPt,numRemaining,1);
+   thisPtRadMat = repmat(thisPtRad,numRemaining,1);
+   distanceMat = thisPtMat - remainingPts;
+   distanceMat = distanceMat .^ 2;
+   distanceMat = sum(distanceMat,2);
+   distanceMat = sqrt(distanceMat);
+   distanceMat = distanceMat - thisPtRadMat - remainingPtRad;
+   
+   %use a sigmoid function to map overlap rating between 0 and 1
+   %only values > 0.5 will be assigned 
+   quarterRadius = thisPtRad * 0.25
+   overlapRating = sigmf(-distanceMat, [0.01,quarterRadius]);
+   if(officialLabels(overallIdx) == 1)
+      in = max(in, overlapRating); 
+   else
+      out = max(out, overlapRating);
+   end
+   
+   
+   figure;
+   hold on;
+   circle(thisPt(1), thisPt(2), (thisPtRad),'b');
+   
+   for k=1:numRemaining
+       dist = overlapRating(k);
+       x = remainingPts(k,1);
+       y = remainingPts(k,2);
+       r = (remainingPtRad(k));
+       if(dist<0.1)
+           circle(x, y, r,'r');
+        else
+            circle(x, y, r,'g');
+       end
+   end
+   circle(thisPt(1), thisPt(2), (thisPtRad),'b');
+
 end
 
 
+end
+
+
+function circle(x,y,r,c)
+%x and y are the coordinates of the center of the circle
+%r is the radius of the circle
+%0.01 is the angle step, bigger values will draw the circle faster but
+%you might notice imperfections (not very smooth)
+ang=0:0.01:2*pi; 
+xp=r*cos(ang);
+yp=r*sin(ang);
+plot(x+xp,y+yp, 'color',c);
 end
 
 function priorityQueue = generatePriorityQueue(in, out)
