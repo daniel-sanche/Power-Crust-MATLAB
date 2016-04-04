@@ -57,13 +57,3 @@ for i=1:size(FF,1)
     % keep track of generated point
     PDinf(i,:) = newpt;
 end
-
-% plot 2D power diagram
-if (nT-1==2)
-    figure
-    axis equal
-    hold on
-    plot(PC(:,1), PC(:,2), 'r.');
-    powerdiagram(E(:,1), E(:,2), T, 'r', wts);
-    plot(E(:,1), E(:,2), 'b.');
-end
