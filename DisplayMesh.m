@@ -16,7 +16,7 @@ for i=1:numEdges
    if(dim==2)
     plot(pts(:,1),pts(:,2));
    elseif (dim==3)
-    plot3(pts(:,1),pts(:,2),pts(:,3));
+    plot3(pts(:,1),pts(:,2),pts(:,3), 'color', 'b');
    end
 end
 title('Surface Mesh');
