@@ -38,5 +38,8 @@ labels = LabelPoles(poleVerts, points, poleRadMat, sampleIdxForPole, oppositePol
 
 %generage the mesh
 [meshVerts, meshEdges] = FindSurfaceMesh(labels, PD{2}, PD{1}, poleVerts, poleRadMat);
+[MedialAxis, MAT] = FindMedialAxis(poleVerts, labels, PD{1});
 
 DisplayMesh(meshEdges);
+DisplayMedialAxis(MedialAxis,MAT);
+Disp('done');
