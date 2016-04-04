@@ -1,6 +1,15 @@
-%ptCloud = pcread('teapot.ply');
+ptCloud = pcread('teapot.ply');
+points = double(ptCloud.Location);
 
-points = GenerateCircle(500, 1);
+points = points(:,2:3);
+
+plot(points(:,1),points(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
+k = boundary(points(:,1),points(:,2),1);
+points = points(k,:);
+
+plot(points(:,1),points(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
+
+%points = GenerateCircle(500, 1);
 
 points = unique(points, 'rows');
 points = [points ; FindBoundingPoints(points, 10)];
