@@ -26,7 +26,7 @@ function [officialLabels] = LabelPoles( polePoints, inputPoints, weights, poleSa
 
   %mark all poles outside of the bounding box as outer poles
   boundingBox = FindBoundingPoints(inputPoints, 0);
-  inBox = isInBoundingBox(polePoints, boundingBox);
+  inBox = IsInBoundingBox(polePoints, boundingBox);
   out(~inBox) = 1;
 
   %keep track of the indices of the remaining, unlabeled poles
@@ -136,20 +136,4 @@ function [sameLabel] = recalculateOverlapping(remainingPoints, remainingWeights,
   overlapRating = sigmf(-distanceMat, [0.01,quarterRadius]);
 
   sameLabel = max(sameLabel, overlapRating);
-end
-
-%checks whether a set of points are within a bounding boc
-%returns a matrix representing whether they are in the box
-function [inBox] = isInBoundingBox(pts, box)
-  [rows, cols] = size(box);
-  inBox = logical(ones(length(pts), 1));
-  for i=1:cols
-    ptDim = pts(:,i);
-    maxVal = max(box(:,i));
-    minVal = min(box(:,i));
-    lessThanMax = ptDim < maxVal;
-    moreThanMin = ptDim > minVal;
-    matchesBoth = and(lessThanMax, moreThanMin);
-    inBox = and(inBox, matchesBoth);
-  end
 end

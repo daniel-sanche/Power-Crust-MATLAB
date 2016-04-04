@@ -1,4 +1,4 @@
-function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCells, polePts, poleRads)
+function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCells, polePts, poleRads, boundingBox)
   % generates the surface mesh for the model
   %
   % inputs:
@@ -10,6 +10,8 @@ function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCel
   %            columns represent the coordinate values
   % poleRads - a list of the radius for each pole. Represents the distance from the pole
   %            to its nearest point in the point cloud
+  % boundingBox - a list of points representing the box around the input
+  %               point cloud
   %
   % outputs:
   % meshVerts - a list of all the vertices on the output surface mesh
@@ -39,6 +41,10 @@ function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCel
   %% find the list of vertices that are on both the inside and outside
   meshVerts = intersect(insideVerts, outsideVerts, 'rows');
   meshVerts = unique(meshVerts, 'rows');
+  
+  %toss any vertices that are outside of the bounding box
+  inBox = IsInBoundingBox(meshVerts, boundingBox);
+  meshVerts(~inBox,:) = [];
 
   %% find the set of edges between border vertices
   [~, dim] = size(meshVerts);
