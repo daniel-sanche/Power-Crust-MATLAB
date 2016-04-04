@@ -14,7 +14,7 @@ for i=1:numEdges
    pts = meshEdges{i}; 
    [~,dim] = size(pts);
    if(dim==2)
-    plot(pts(:,1),pts(:,2));
+    plot(pts(:,1),pts(:,2), 'color', 'r');
    elseif (dim==3)
     plot3(pts(:,1),pts(:,2),pts(:,3), 'color', 'r');
    end

@@ -2,11 +2,11 @@ function [MeshVerts,MeshEdges,MedialAxis,MAT] = PowerCrust(points)
     %This algorithm is an implementation of the Powert Crust algorithm
     %described by Nina Amenta, Sunghee Choi, and  Ravi Krishna Kolluri
     %from the University of Texas at Austin.
-    %The algorithm takes in a 2D point cloud as input, and returns a
+    %The algorithm takes in a 2D or 3D point cloud as input, and returns a
     %surface mesh, and the medial axis transform
     %
     % inputs:
-    % points - a hallow 2D point cloud of some object
+    % points - a hallow 2D or 3D point cloud of some object
     %          should be nx2, where each row is a distinct point
     %
     % outputs:
