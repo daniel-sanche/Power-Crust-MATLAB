@@ -58,8 +58,6 @@ function [officialLabels] = LabelPoles( polePoints, inputPoints, weights, poleSa
     poleSampleIdx(nextIdx) = [];
     poleOppositeIdx(nextIdx) = [];
      
-    [numRemaining,~] = size(remainingIndices);
-     
     %if there are still points left, recalculate in and out values
     if(~isempty(remainingIndices))
       %find which points overlap. They should likely be given the same label
@@ -121,17 +119,18 @@ end
 
 %calculates new label values for poles that overlap with the current pole
 %if they overlap by a large amount, they likely share the same label
-function [sameLabel] = recalculateOverlapping(remainingPoints, remainingWeights, thisPt, sameLabel)
+function [sameLabel] = recalculateOverlapping(remainingPoints, remainingWeights, thisPt, thisRad, sameLabel)
+  [numRemaining,~] = size(remainingPoints);
   thisPtMat = repmat(thisPt,numRemaining,1);
-  thisPtRadMat = repmat(thisPtRad,numRemaining,1);
-  distanceMat = thisPtMat - remainingPts;
+  thisPtRadMat = repmat(thisRad,numRemaining,1);
+  distanceMat = thisPtMat - remainingPoints;
   distanceMat = distanceMat .^ 2;
   distanceMat = sum(distanceMat,2);
   distanceMat = sqrt(distanceMat);
-  distanceMat = distanceMat - thisPtRadMat - remainingPtRad;
+  distanceMat = distanceMat - thisPtRadMat - remainingWeights;
 
   %use a sigmoid function to map overlap rating between 0 and 1
-  quarterRadius = thisPtRad * 0.25;
+  quarterRadius = thisRad * 0.25;
   overlapRating = sigmf(-distanceMat, [0.01,quarterRadius]);
 
   sameLabel = max(sameLabel, overlapRating);

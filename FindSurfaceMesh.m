@@ -62,7 +62,7 @@ function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCel
 
   %% filter out the edges that intersect significantly with a polar ball
   intersectsBall = zeros(length(edgeMidPts),1);
-  significantVal = 0.02
+  significantVal = 0.02;
 
   for i=1:length(edgeMidPts)
     %find the distance between the mid point of the edge, and all polar balls
