@@ -41,8 +41,9 @@ function [meshVerts, meshEdges] = FindSurfaceMesh( labels, edgeList, vertsForCel
   meshVerts = unique(meshVerts, 'rows');
 
   %% find the set of edges between border vertices
+  [~, dim] = size(meshVerts);
   meshEdges = cell(length(meshVerts),1);
-  edgeMidPts = zeros(length(meshVerts),2);
+  edgeMidPts = zeros(length(meshVerts),dim);
   idx = 1;
   %iterate through every edge in the power diagram
   for i=1:length(edgeList)
