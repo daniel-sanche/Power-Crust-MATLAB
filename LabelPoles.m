@@ -86,7 +86,7 @@ while(~isempty(remainingIndices))
    end
 end
 
-
+officialLabels = logical(officialLabels);
 end
 
 
