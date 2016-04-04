@@ -13,18 +13,13 @@ cells = cells(1:length(cells)-4,:);
 points = points(1:length(points)-4,:);
 
 %find the poles of each cell
-[poleIdxMat, poleRadMat] = FindPoles( verts, cells, points );
-poleVerts = verts(poleIdxMat, :);
-[poleVerts, keptIdx] = unique(poleVerts, 'rows');
-poleRadMat = poleRadMat(keptIdx);
+[poleVerts, poleRadMat, sampleIdxForPole, oppositePoleIdx] = FindPoles( verts, cells, points );
 
-poleRadMat = poleRadMat .^ 2;
-
-%DisplayPolarBalls(poleVerts, poleRadMat);
+DisplayPolarBalls(poleVerts, poleRadMat);
 
 
 %find the power diagram
-[PD, PDinf] = powerDiagramWrapper(poleVerts, poleRadMat);
+[PD, PDinf] = powerDiagramWrapper(poleVerts, poleRadMat .^2);
 hold on;
 plot(points(:,1), points(:,2),'Marker','.','MarkerEdgeColor','g','MarkerSize',10, 'LineStyle', 'none');
 hold off;

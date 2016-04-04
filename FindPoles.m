@@ -1,6 +1,8 @@
-function [ polesMat, poleRadMat] = FindPoles( verts, cells, points )
-    polesMat = zeros(length(cells)*2, 1);
-    poleRadMat = zeros(length(cells)*2, 1);
+function [ poleVerts, poleRadMat, sampleIdxForPole, oppositePoleIdx] = FindPoles( verts, cells, points )
+    polesMat = ones(length(cells)*2, 1) *-1;
+    poleRadMat = ones(length(cells)*2, 1) *-1;
+    sampleIdxForPole = ones(length(cells)*2,1) *-1;
+    oppositePoleIdx = ones(length(cells)*2,1) *-1;
     j = 1;
     for i =1:length(cells)
         thisPoint = points(i,:);
@@ -27,22 +29,32 @@ function [ polesMat, poleRadMat] = FindPoles( verts, cells, points )
         filteredVertices = thisCell(negativeDot);
         secondPoleIdx = filteredVertices(idx);
         
-        polesMat(j) = firstPoleIdx;
-        poleRadMat(j) = firstRad;
-        polesMat(j+1) = secondPoleIdx;
-        poleRadMat(j+1) = secondRad;
-        j=j+2;
-        
-        %hold on;
-        %plot cell hull
-        %hull = convhulln(cellsVertices); 
-        %patch('Vertices',cellsVertices,'Faces',hull,'FaceColor','g','FaceAlpha',0.2) 
-        %plot this vertex
-        %plot3(thisPoint(1), thisPoint(2), thisPoint(3),  'ws--', 'MarkerEdgeColor', 'r', 'MarkerFaceColor', 'r');
-        %plot poles
-        %plot3(firstPole(1), firstPole(2), firstPole(3),  'ws--', 'MarkerEdgeColor', 'b', 'MarkerFaceColor', 'b');
-        %plot3(secondPole(1), secondPole(2), secondPole(3),  'ws--', 'MarkerEdgeColor', 'b', 'MarkerFaceColor', 'b');
+        if(isempty(find(polesMat == firstPoleIdx)))
+            polesMat(j) = firstPoleIdx;
+            poleRadMat(j) = firstRad;
+            sampleIdxForPole(j) = i;
+            if(isempty(find(polesMat == secondPoleIdx)))
+                oppositePoleIdx(j) = secondPoleIdx;
+            else
+                oppositePoleIdx(j) = find(polesMat == secondPoleIdx);
+            end
+            j=j+1;
+        else
+            firstPoleIdx = find(polesMat == firstPoleIdx);
+        end
+        if(isempty(find(polesMat == secondPoleIdx)))
+            polesMat(j) = secondPoleIdx;
+            poleRadMat(j) = secondRad;
+            sampleIdxForPole(j) = i;
+            oppositePoleIdx(j) = firstPoleIdx;
+            j=j+1;
+        end
     end
-
+    polesMat(polesMat==-1) = [];
+    poleRadMat(poleRadMat==-1) = [];
+    sampleIdxForPole(sampleIdxForPole==-1) = [];
+    oppositePoleIdx(oppositePoleIdx==-1) = [];
+    
+    poleVerts = verts(polesMat, :);
 end
 

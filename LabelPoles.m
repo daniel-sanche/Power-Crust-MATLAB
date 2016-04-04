@@ -1,7 +1,4 @@
 function [result] = LabelPoles( polePoints, inputPoints, weights )
-
-rads = sqrt(weights);
-
 boundingBox = FindBoundingPoints(inputPoints, 0);
 plot(polePoints(:,1), polePoints(:,2),'Marker','.','MarkerEdgeColor','r','MarkerSize',10, 'LineStyle', 'none');
 hold on
@@ -44,8 +41,8 @@ while(~isempty(remainingIndices))
    
    if(~isempty(remainingIndices))
        remainingPts = polePoints(remainingIndices, :);
-       remainingPtRad = rads(remainingIndices);
-       thisPtRad = rads(overallIdx);
+       remainingPtRad = weights(remainingIndices);
+       thisPtRad = weights(overallIdx);
        thisPt = polePoints(overallIdx,:);
        thisPtMat = repmat(thisPt,numRemaining,1);
        thisPtRadMat = repmat(thisPtRad,numRemaining,1);
