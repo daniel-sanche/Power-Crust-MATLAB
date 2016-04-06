@@ -14,14 +14,20 @@ After the polar balls have been appropriately labeled, the algorithm creates ano
 The power diagram generated in the previous step is then used to generate the mesh and the MAT. The mesh is defined as the set of vertices and edges in the power diagram separating the interior poles from the outer poles. These edges and vertices can be represented as a polygonal mesh with the same dimensionality as the input point cloud. The medial axis is defined as the set of poles labeled as interior regions. To form the MAT, we just join the medial axis points together based on the connectivity of the power diagram. If we take the dual of the interior power diagram cells, it forms the MAT. 
 
 
-### Sample Outputs
+### Results
 
-![2D Input](/result samples/input2D.tiff)
-Input point cloud
-![2D MAT](/result samples/MAT2D.tiff)
-Output MAT
-![2D Mesh](/result samples/Mesh2D.tiff)
-Output Surface Mesh
+![3D Input](result samples/input3D.png)
+
+	Input Point Cloud
+
+![3D MAT](result samples/MAT3D.png)
+
+	Output MAT
+
+![3D MAT](result samples/Mesh3D.png)
+
+	Output Surface Mesh
+
 
 ### Acknowledgements
 
