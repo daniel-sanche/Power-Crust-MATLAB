@@ -31,5 +31,7 @@ The power diagram generated in the previous step is then used to generate the me
 
 ### Acknowledgements
 
-This project makes use of Frederick McCollum's [MATLAB Power Diagram code](http://www.mathworks.com/matlabcentral/fileexchange/44385-power-diagrams)
+* This project makes use of Frederick McCollum's [MATLAB Power Diagram code](http://www.mathworks.com/matlabcentral/fileexchange/44385-power-diagrams)
+
+* Based on the paper by Nina Amenta, Sunghee Choi, and Ravi Krishna Kolluri at the University of Texas at Austin
 
