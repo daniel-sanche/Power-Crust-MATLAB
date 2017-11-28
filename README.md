@@ -16,15 +16,20 @@ The power diagram generated in the previous step is then used to generate the me
 
 ### Results
 
-![3D Input](result samples/input3D.png)
-
+<p align="center">
+  <img src="./result samples/input3D.png" alt="3D Input"/>
+</p>
 	Input Point Cloud
 
-![3D MAT](result samples/MAT3D.png)
+<p align="center">
+  <img src="./result samples/MAT3D.png" alt="3D Mat"/>
+</p>
 
 	Output MAT
 
-![3D MAT](result samples/Mesh3D.png)
+<p align="center">
+  <img src="./result samples/Mesh3D.png" alt="3D Mesh"/>
+</p>
 
 	Output Surface Mesh
 
